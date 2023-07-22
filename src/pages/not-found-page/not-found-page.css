@@ -1,0 +1,30 @@
+.not-found {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 1 0 auto;
+  padding: 80px;
+}
+
+.not-found h1 {
+  margin: 0;
+  margin-bottom: 60px;
+  font-size: 32px;
+  line-height: 1.1875;
+}
+
+.not-found a {
+  min-width: 137px;
+  padding: 16px 20px 13px;
+  text-align: center;
+  font-size: 19px;
+  letter-spacing: 0.9px;
+  color: #fff;
+  background-color: #4481c3;
+  border-radius: 3px;
+
+  &:hover {
+    background-color: #3069a6;
+  }
+}
