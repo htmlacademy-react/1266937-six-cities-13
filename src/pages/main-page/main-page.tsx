@@ -1,11 +1,12 @@
-import PlaceCard from '../../components/place-card/place-card';
+import PlaceList from '../../components/place-list/place-list';
+import { Offers } from '../../types/offer';
 
 type MainPageProps = {
-  placesCount: number;
   offersCount: number;
+  offers: Offers;
 }
 
-export default function MainPage({ placesCount, offersCount }: MainPageProps): JSX.Element {
+export default function MainPage({ offersCount, offers }: MainPageProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -115,12 +116,7 @@ export default function MainPage({ placesCount, offersCount }: MainPageProps): J
                   </li>
                 </ul>
               </form>
-              <div className="cities__places-list places__list tabs__content">
-                {
-                  Array.from({ length: placesCount }, (v, i) =>
-                    (<PlaceCard key={i} />))
-                }
-              </div>
+              <PlaceList offers={offers} />
             </section>
             <div className="cities__right-section">
               <section className="cities__map map" />
