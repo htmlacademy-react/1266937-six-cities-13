@@ -4,13 +4,26 @@ import { capitalizeFirstLetter, getRatingWidth } from '../../utils';
 
 type PlaceCardProps = {
   offer: Offer;
+  setActiveCard: (activeCard: object) => void;
 }
 
-export default function PlaceCard({ offer }: PlaceCardProps): JSX.Element {
+export default function PlaceCard({ offer, setActiveCard }: PlaceCardProps): JSX.Element {
   const { isPremium, previewImage, title, price, isFavorite, rating, type } = offer;
+  const activeCard = offer;
+
+  const handleMouseEnter = () => {
+    setActiveCard(activeCard);
+  };
+
+  const handleMouseLeave = () => {
+    setActiveCard({});
+  };
 
   return (
-    <article className="cities__card place-card">
+    <article className="cities__card place-card"
+      onMouseEnter={() => handleMouseEnter()}
+      onMouseLeave={() => handleMouseLeave()}
+    >
       {isPremium &&
         <div className="place-card__mark">
           <span>Premium</span>
