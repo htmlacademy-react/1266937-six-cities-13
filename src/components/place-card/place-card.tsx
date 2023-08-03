@@ -2,6 +2,7 @@ import { Offer } from '../../types/offer';
 import { clsx } from 'clsx';
 import { capitalizeFirstLetter, getRatingWidth } from '../../utils';
 import { CardType } from '../../constants';
+import { Link } from 'react-router-dom';
 
 type PlaceCardProps = {
   offer: Offer;
@@ -19,7 +20,7 @@ const getPropertyByType = (type: string) => {
 };
 
 export default function PlaceCard({ offer, setActiveCard, cardType }: PlaceCardProps): JSX.Element {
-  const { isPremium, previewImage, title, price, isFavorite, rating, type } = offer;
+  const { isPremium, previewImage, title, price, isFavorite, rating, type, id } = offer;
   const activeCard = offer;
 
   const handleMouseEnter = () => {
@@ -83,7 +84,7 @@ export default function PlaceCard({ offer, setActiveCard, cardType }: PlaceCardP
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{title}</a>
+          <Link to={`/offer/${id}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{capitalizeFirstLetter(type)}</p>
       </div>
