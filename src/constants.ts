@@ -11,3 +11,9 @@ export const AuthorizationStatus = {
 } as const;
 
 export const MAX_RATING = 5;
+
+export const CardType = {
+  Cities: 'cities',
+  Favorites: 'favorites',
+  Nearby: 'nearby',
+} as const;

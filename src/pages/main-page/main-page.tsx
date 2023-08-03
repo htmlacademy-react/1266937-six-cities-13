@@ -1,4 +1,5 @@
 import PlaceList from '../../components/place-list/place-list';
+import { CardType } from '../../constants';
 import { Offers } from '../../types/offer';
 
 type MainPageProps = {
@@ -116,7 +117,7 @@ export default function MainPage({ offersCount, offers }: MainPageProps): JSX.El
                   </li>
                 </ul>
               </form>
-              <PlaceList offers={offers} />
+              <PlaceList offers={offers} cardType={CardType.Cities} />
             </section>
             <div className="cities__right-section">
               <section className="cities__map map" />
