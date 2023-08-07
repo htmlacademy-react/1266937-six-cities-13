@@ -6,8 +6,9 @@ import { Link } from 'react-router-dom';
 
 type PlaceCardProps = {
   offer: Offer;
-  setActiveCard?: (activeCard: object) => void;
   cardType: typeof CardType[keyof typeof CardType];
+  handleMouseEnter: (offer: Offer) => void;
+  handleMouseLeave: () => void;
 }
 
 const getPropertyByType = (type: string) => {
@@ -19,26 +20,12 @@ const getPropertyByType = (type: string) => {
   }
 };
 
-export default function PlaceCard({ offer, setActiveCard, cardType }: PlaceCardProps): JSX.Element {
+export default function PlaceCard({ offer, handleMouseEnter, handleMouseLeave, cardType }: PlaceCardProps): JSX.Element {
   const { isPremium, previewImage, title, price, isFavorite, rating, type, id } = offer;
-  const activeCard = offer;
-
-  const handleMouseEnter = () => {
-    if (setActiveCard) {
-      return setActiveCard(activeCard);
-    }
-  };
-
-  const handleMouseLeave = () => {
-    if (setActiveCard) {
-      return setActiveCard({});
-    }
-  };
-
 
   return (
     <article className={clsx(`${cardType}__card`, 'place-card')}
-      onMouseEnter={() => handleMouseEnter()}
+      onMouseEnter={() => handleMouseEnter(offer)}
       onMouseLeave={() => handleMouseLeave()}
     >
       {isPremium &&

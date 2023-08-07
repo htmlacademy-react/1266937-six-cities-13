@@ -1,16 +1,16 @@
 import PlaceCard from '../place-card/place-card';
-import { Offers } from '../../types/offer';
-import { useState } from 'react';
+import { Offers, Offer } from '../../types/offer';
 import { CardType } from '../../constants';
 
 type PlaceListProps = {
   offers: Offers;
   cardType: typeof CardType[keyof typeof CardType];
+  handleMouseEnter: (offer: Offer) => void;
+  handleMouseLeave: () => void;
 }
 
 
-export default function PlaceList({ offers, cardType }: PlaceListProps) {
-  const [, setActiveCard] = useState({});
+export default function PlaceList({ offers, cardType, handleMouseEnter, handleMouseLeave }: PlaceListProps) {
 
   return (
     <div className="cities__places-list places__list tabs__content">
@@ -18,8 +18,9 @@ export default function PlaceList({ offers, cardType }: PlaceListProps) {
         <PlaceCard
           key={offer.id}
           offer={offer}
-          setActiveCard={setActiveCard}
           cardType={cardType}
+          handleMouseEnter={handleMouseEnter}
+          handleMouseLeave={handleMouseLeave}
         />
       )
       )}
