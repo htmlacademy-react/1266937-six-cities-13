@@ -11,13 +11,16 @@ import FavoritesPage from '../../pages/favorites-page/favorites-page';
 import OfferPage from '../../pages/offer-page/offer-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import { Offers } from '../../types/offer';
+import { Reviews } from '../../types/review';
+
 
 type AppScreenProps = {
   offersCount: number;
   offers: Offers;
+  reviews: Reviews;
 }
 
-export default function App({ offersCount, offers }: AppScreenProps): JSX.Element {
+export default function App({ offersCount, offers, reviews }: AppScreenProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
@@ -41,7 +44,7 @@ export default function App({ offersCount, offers }: AppScreenProps): JSX.Elemen
         />
         <Route
           path={AppRoute.Offer}
-          element={<OfferPage />}
+          element={<OfferPage reviews={reviews} />}
         />
         <Route
           path='*'

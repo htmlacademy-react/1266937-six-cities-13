@@ -10,3 +10,5 @@ export type Review = {
     isPro: boolean;
   };
 }
+
+export type Reviews = Review[];
