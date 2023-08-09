@@ -1,13 +1,25 @@
 import ReviewForm from '../../components/review-form/review-form';
 import ReviewList from '../../components/review-list/review-list';
-import { Reviews } from '../../types/review';
+import Map from '../../components/map/map';
+import type { Reviews } from '../../types/review';
+import type { Offers, Offer, City } from '../../types/offer';
+import { CardType } from '../../constants';
+import { useParams } from 'react-router-dom';
 
 
 type OfferPageProps = {
   reviews: Reviews;
+  offers: Offers;
+  city: City;
 }
 
-export default function OfferPage({ reviews }: OfferPageProps): JSX.Element {
+export default function OfferPage({ reviews, offers, city }: OfferPageProps): JSX.Element {
+  const params = useParams();
+  const activeOffer = offers.find((offer) => offer.id === params.id) as Offer;
+  const { title, price } = activeOffer;
+  const nearPlaces = offers.filter((offer) => offer.id !== activeOffer.id);
+
+
   return (
     <div className="page">
       <header className="header">
@@ -103,7 +115,7 @@ export default function OfferPage({ reviews }: OfferPageProps): JSX.Element {
               </div>
               <div className="offer__name-wrapper">
                 <h1 className="offer__name">
-                  Beautiful &amp; luxurious studio at great location
+                  {title}
                 </h1>
                 <button className="offer__bookmark-button button" type="button">
                   <svg className="offer__bookmark-icon" width={31} height={33}>
@@ -129,7 +141,7 @@ export default function OfferPage({ reviews }: OfferPageProps): JSX.Element {
                 </li>
               </ul>
               <div className="offer__price">
-                <b className="offer__price-value">€120</b>
+                <b className="offer__price-value">€{price}</b>
                 <span className="offer__price-text">&nbsp;night</span>
               </div>
               <div className="offer__inside">
@@ -187,7 +199,7 @@ export default function OfferPage({ reviews }: OfferPageProps): JSX.Element {
               </section>
             </div>
           </div>
-          <section className="offer__map map" />
+          <Map offers={[...nearPlaces.slice(0, 3), activeOffer]} city={city} cardType={CardType.Offer} activeCard={activeOffer} />
         </section>
         <div className="container">
           <section className="near-places places">

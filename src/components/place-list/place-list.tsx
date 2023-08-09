@@ -1,10 +1,10 @@
 import PlaceCard from '../place-card/place-card';
-import { Offers, Offer } from '../../types/offer';
+import type { Offers, Offer } from '../../types/offer';
 import { CardType } from '../../constants';
 
 type PlaceListProps = {
   offers: Offers;
-  cardType: typeof CardType[keyof typeof CardType];
+  cardType: typeof CardType[keyof typeof CardType] | undefined;
   handleMouseEnter: (offer: Offer) => void;
   handleMouseLeave: () => void;
 }

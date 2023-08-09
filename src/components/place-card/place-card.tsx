@@ -1,32 +1,28 @@
-import { Offer } from '../../types/offer';
+import type { Offer } from '../../types/offer';
 import { clsx } from 'clsx';
 import { capitalizeFirstLetter, getRatingWidth } from '../../utils';
-import { CardType } from '../../constants';
+import { CardType, getPropertyByType } from '../../constants';
 import { Link } from 'react-router-dom';
 
 type PlaceCardProps = {
   offer: Offer;
-  cardType: typeof CardType[keyof typeof CardType];
-  handleMouseEnter: (offer: Offer) => void;
-  handleMouseLeave: () => void;
+  cardType?: typeof CardType[keyof typeof CardType] | undefined;
+  handleMouseEnter?: (offer: Offer) => void;
+  handleMouseLeave?: () => void;
 }
 
-const getPropertyByType = (type: string) => {
-  switch (type) {
-    case CardType.Cities:
-      return { previewImage: { width: 260, height: 200 } };
-    case CardType.Favorites:
-      return { previewImage: { width: 150, height: 110 } };
-  }
-};
 
 export default function PlaceCard({ offer, handleMouseEnter, handleMouseLeave, cardType }: PlaceCardProps): JSX.Element {
   const { isPremium, previewImage, title, price, isFavorite, rating, type, id } = offer;
 
+  if (cardType === undefined) {
+    return undefined;
+  }
+
   return (
     <article className={clsx(`${cardType}__card`, 'place-card')}
-      onMouseEnter={() => handleMouseEnter(offer)}
-      onMouseLeave={() => handleMouseLeave()}
+      onMouseEnter={() => handleMouseEnter?.(offer)}
+      onMouseLeave={() => handleMouseLeave?.()}
     >
       {isPremium &&
         <div className="place-card__mark">
@@ -37,8 +33,8 @@ export default function PlaceCard({ offer, handleMouseEnter, handleMouseLeave, c
           <img
             className="place-card__image"
             src={previewImage}
-            width={getPropertyByType(cardType)?.previewImage.width}
-            height={getPropertyByType(cardType)?.previewImage.height}
+            width={getPropertyByType(cardType)?.previewImage?.width}
+            height={getPropertyByType(cardType)?.previewImage?.height}
             alt={title}
           />
         </a>

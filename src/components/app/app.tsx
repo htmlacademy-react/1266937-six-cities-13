@@ -3,30 +3,37 @@ import {
   Routes,
   Route
 } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../../constants';
+import {
+  AppRoute,
+  AuthorizationStatus
+} from '../../constants';
 import PrivateRoute from '../private-route/private-route';
 import MainPage from '../../pages/main-page/main-page';
 import LoginPage from '../../pages/login-page/login-page';
 import FavoritesPage from '../../pages/favorites-page/favorites-page';
 import OfferPage from '../../pages/offer-page/offer-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
-import { Offers } from '../../types/offer';
-import { Reviews } from '../../types/review';
+import type {
+  Offers,
+  City
+} from '../../types/offer';
+import type { Reviews } from '../../types/review';
 
 
 type AppScreenProps = {
   offersCount: number;
   offers: Offers;
   reviews: Reviews;
+  city: City;
 }
 
-export default function App({ offersCount, offers, reviews }: AppScreenProps): JSX.Element {
+export default function App({ offersCount, offers, reviews, city }: AppScreenProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Main}
-          element={<MainPage offersCount={offersCount} offers={offers} />}
+          element={<MainPage offersCount={offersCount} city={city} offers={offers} />}
         />
         <Route
           path={AppRoute.Login}
@@ -44,7 +51,7 @@ export default function App({ offersCount, offers, reviews }: AppScreenProps): J
         />
         <Route
           path={AppRoute.Offer}
-          element={<OfferPage reviews={reviews} />}
+          element={<OfferPage city={city} offers={offers} reviews={reviews} />}
         />
         <Route
           path='*'

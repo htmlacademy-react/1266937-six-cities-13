@@ -1,8 +1,8 @@
-import type { Offer } from '../types/offer';
+import { Offers } from '../types/offer';
 
-export const offers: Offer[] = [
+export const offers: Offers = [
   {
-    id: crypto.randomUUID(),
+    id: '1',
     title: 'House in countryside',
     type: 'room',
     price: 140,
@@ -26,7 +26,7 @@ export const offers: Offer[] = [
   },
 
   {
-    id: crypto.randomUUID(),
+    id: '2',
     title: 'Amazing and Extremely Central Flat',
     type: 'apartment',
     price: 183,
@@ -50,7 +50,7 @@ export const offers: Offer[] = [
   },
 
   {
-    id: crypto.randomUUID(),
+    id: '3',
     title: 'Amazing and Extremely Central Flat',
     type: 'private room',
     price: 381,
@@ -74,7 +74,7 @@ export const offers: Offer[] = [
   },
 
   {
-    id: crypto.randomUUID(),
+    id: '4',
     title: 'The house among olive ',
     type: 'house',
     price: 306,
