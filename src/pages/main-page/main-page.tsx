@@ -2,7 +2,7 @@ import { useState } from 'react';
 import PlaceList from '../../components/place-list/place-list';
 import Map from '../../components/map/map';
 import { CardType } from '../../constants';
-import { Offers, Offer, City } from '../../types/offer';
+import type { Offers, Offer, City } from '../../types/offer';
 
 type MainPageProps = {
   offersCount: number;
@@ -14,8 +14,10 @@ export default function MainPage({ offersCount, offers, city }: MainPageProps): 
   const [activeCard, setActiveCard] = useState<Offer | undefined>(undefined);
 
   const handleMouseEnter = (card: Offer) => {
-    const currentPoint = offers.find((offer) => offer === card);
-    setActiveCard(currentPoint);
+    if (card !== undefined) {
+      const currentPoint = offers.find((offer) => offer === card);
+      setActiveCard(currentPoint);
+    }
   };
 
   const handleMouseLeave = () => setActiveCard(undefined);
@@ -133,7 +135,7 @@ export default function MainPage({ offersCount, offers, city }: MainPageProps): 
               <PlaceList offers={offers} cardType={CardType.Cities} handleMouseEnter={handleMouseEnter} handleMouseLeave={handleMouseLeave} />
             </section>
             <div className="cities__right-section">
-              <Map offers={offers} city={city} activeCard={activeCard} />
+              <Map city={city} offers={offers} activeCard={activeCard} cardType={CardType.Cities} />
             </div>
           </div>
         </div>

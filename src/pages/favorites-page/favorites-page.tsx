@@ -1,5 +1,5 @@
 import PlaceCard from '../../components/place-card/place-card';
-import { Offers } from '../../types/offer';
+import type { Offers } from '../../types/offer';
 import { CardType } from '../../constants';
 
 type FavoritesPageProps = {

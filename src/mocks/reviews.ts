@@ -1,6 +1,6 @@
 export const reviews = [
   {
-    id: '1',
+    id: crypto.randomUUID(),
     date: '2019-05-08',
     comment: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
     rating: 4,
@@ -13,27 +13,27 @@ export const reviews = [
   },
 
   {
-    id: '2',
-    date: '2019-05-08',
+    id: crypto.randomUUID(),
+    date: '2020-09-08',
     comment: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
     rating: 3,
 
     user: {
-      name: 'Oliver Conner',
+      name: 'Max',
       avatarUrl: 'img/avatar-max.jpg',
       isPro: false,
     },
   },
 
   {
-    id: '3',
-    date: '2019-05-08',
+    id: crypto.randomUUID(),
+    date: '2019-07-08',
     comment: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
     rating: 5,
 
     user: {
       name: 'Oliver Conner',
-      avatarUrl: 'img/avatar-max.jpg',
+      avatarUrl: 'img/avatar-angelina.jpg',
       isPro: true,
     },
   },

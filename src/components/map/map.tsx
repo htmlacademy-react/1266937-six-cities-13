@@ -2,14 +2,16 @@ import { useRef, useEffect } from 'react';
 import { Icon, Marker, layerGroup } from 'leaflet';
 import { useMap } from '../../hooks/use-map';
 import { City, Offer, Offers } from '../../types/offer';
-import { URL_MARKER_DEFAULT, URL_MARKER_CURRENT } from '../../constants';
+import { URL_MARKER_DEFAULT, URL_MARKER_CURRENT, CardType, getPropertyByType } from '../../constants';
 import 'leaflet/dist/leaflet.css';
+import { clsx } from 'clsx';
 
 
 type MapProps = {
   city: City;
   offers: Offers;
-  activeCard: Offer | undefined;
+  activeCard?: Offer | undefined;
+  cardType: typeof CardType[keyof typeof CardType];
 }
 
 const defaultCustomIcon = new Icon({
@@ -24,7 +26,7 @@ const currentCustomIcon = new Icon({
   iconAnchor: [13, 39],
 });
 
-export default function Map({ city, offers, activeCard }: MapProps): JSX.Element {
+export default function Map({ city, offers, activeCard, cardType }: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
@@ -57,8 +59,11 @@ export default function Map({ city, offers, activeCard }: MapProps): JSX.Element
 
   return (
     <section
-      className="cities__map map"
-      style={{ height: 'auto' }}
+      className={clsx(`${cardType}__map`, 'map')}
+      style={{
+        width: getPropertyByType(cardType)?.map?.width,
+        height: getPropertyByType(cardType)?.map?.height
+      }}
       ref={mapRef}
     />
   );

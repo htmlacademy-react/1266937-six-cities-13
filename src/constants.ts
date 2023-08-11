@@ -16,7 +16,8 @@ export const DEFAULT_RATING = 0;
 export const CardType = {
   Cities: 'cities',
   Favorites: 'favorites',
-  Nearby: 'nearby',
+  Nearby: 'near-places',
+  Offer: 'offer',
 } as const;
 
 export enum RatingTitle {
@@ -29,3 +30,35 @@ export enum RatingTitle {
 
 export const URL_MARKER_DEFAULT = '../img/pin.svg';
 export const URL_MARKER_CURRENT = '../img/pin-active.svg';
+
+export const getPropertyByType = (type: string) => {
+  switch (type) {
+    case CardType.Cities:
+      return {
+        previewImage:
+        {
+          width: 260,
+          height: 200
+        },
+        map: {
+          width: '100%',
+          height: 'auto'
+        },
+      };
+    case CardType.Favorites:
+      return {
+        previewImage:
+        {
+          width: 150,
+          height: 110
+        },
+      };
+    case CardType.Offer:
+      return {
+        map: {
+          width: '100%',
+          height: '579px'
+        },
+      };
+  }
+};
