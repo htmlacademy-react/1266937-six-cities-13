@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 type PlaceCardProps = {
   offer: Offer;
-  cardType?: typeof CardType[keyof typeof CardType] | undefined;
+  cardType: typeof CardType[keyof typeof CardType];
   handleMouseEnter?: (offer: Offer) => void;
   handleMouseLeave?: () => void;
 }
@@ -14,10 +14,6 @@ type PlaceCardProps = {
 
 export default function PlaceCard({ offer, handleMouseEnter, handleMouseLeave, cardType }: PlaceCardProps): JSX.Element {
   const { isPremium, previewImage, title, price, isFavorite, rating, type, id } = offer;
-
-  if (cardType === undefined) {
-    return undefined;
-  }
 
   return (
     <article className={clsx(`${cardType}__card`, 'place-card')}

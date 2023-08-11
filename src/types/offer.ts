@@ -23,3 +23,16 @@ export type Offer = {
 };
 
 export type Offers = Offer[];
+
+export type ExtendedOffer = Omit<Offer, 'previewImage'> & {
+  description: string;
+  bedrooms: number;
+  goods: string[];
+  images: string[];
+  maxAdults: number;
+  host: {
+    name: string;
+    avatarUrl: string;
+    isPro: boolean;
+  };
+}

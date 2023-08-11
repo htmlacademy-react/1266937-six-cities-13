@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
-import { offers } from './mocks/offers';
+import { extendedOffers, offers } from './mocks/offers';
 import { reviews } from './mocks/reviews';
 export const Data = {
   offersCount: 200,
@@ -18,6 +18,7 @@ root.render(
       offers={offers}
       reviews={reviews}
       city={offers[0].city}
+      extendedOffers={extendedOffers}
     />
   </React.StrictMode>
 );

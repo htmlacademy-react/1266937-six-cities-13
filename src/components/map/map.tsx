@@ -11,7 +11,7 @@ type MapProps = {
   city: City;
   offers: Offers;
   activeCard?: Offer | undefined;
-  cardType?: typeof CardType[keyof typeof CardType] | undefined;
+  cardType: typeof CardType[keyof typeof CardType];
 }
 
 const defaultCustomIcon = new Icon({
@@ -56,11 +56,6 @@ export default function Map({ city, offers, activeCard, cardType }: MapProps): J
       };
     }
   }, [map, activeCard, offers]);
-
-  if (cardType === undefined) {
-    return undefined;
-  }
-
 
   return (
     <section

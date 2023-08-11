@@ -15,7 +15,8 @@ import OfferPage from '../../pages/offer-page/offer-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import type {
   Offers,
-  City
+  City,
+  ExtendedOffer,
 } from '../../types/offer';
 import type { Reviews } from '../../types/review';
 
@@ -25,9 +26,10 @@ type AppScreenProps = {
   offers: Offers;
   reviews: Reviews;
   city: City;
+  extendedOffers: ExtendedOffer[];
 }
 
-export default function App({ offersCount, offers, reviews, city }: AppScreenProps): JSX.Element {
+export default function App({ offersCount, offers, extendedOffers, reviews, city }: AppScreenProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
@@ -51,7 +53,7 @@ export default function App({ offersCount, offers, reviews, city }: AppScreenPro
         />
         <Route
           path={AppRoute.Offer}
-          element={<OfferPage city={city} offers={offers} reviews={reviews} />}
+          element={<OfferPage city={city} offers={offers} extendedOffers={extendedOffers} reviews={reviews} />}
         />
         <Route
           path='*'
