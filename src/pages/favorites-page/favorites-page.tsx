@@ -65,7 +65,7 @@ export default function FavoritesPage({ offers }: FavoritesPageProps): JSX.Eleme
             <h1 className="favorites__title">Saved listing</h1>
             <ul className="favorites__list">
               {locations.map((location) => (
-                < li key={location} className="favorites__locations-items" >
+                <li key={location} className="favorites__locations-items">
                   <div className="favorites__locations locations locations--current">
                     <div className="locations__item">
                       <a className="locations__item-link" href="#">

@@ -42,11 +42,6 @@ export default function OfferPage({ reviews, extendedOffers, offers, city }: Off
 
   const { name, avatarUrl, isPro } = host;
 
-  if (activeMarker === undefined) {
-    return;
-  }
-
-
   return (
     <div className="page">
       <header className="header">
@@ -194,7 +189,7 @@ export default function OfferPage({ reviews, extendedOffers, offers, city }: Off
               </section>
             </div>
           </div>
-          <Map offers={[...nearPlaces, activeMarker]} city={city} cardType={CardType.Offer} activeCard={activeMarker} />
+          <Map offers={[...nearPlaces, activeMarker]} city={city} cardType={CardType.Offer} activeOffer={activeMarker} />
         </section>
         <div className="container">
           <section className="near-places places">

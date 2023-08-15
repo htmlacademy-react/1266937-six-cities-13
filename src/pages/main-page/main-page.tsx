@@ -1,27 +1,33 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useAppSelector, useAppDispatch } from '../../hooks';
 import PlaceList from '../../components/place-list/place-list';
 import Map from '../../components/map/map';
-import { CardType } from '../../constants';
+import { CardType, LocationItem } from '../../constants';
 import type { Offers, Offer, City } from '../../types/offer';
+import { getOfferListByLocation, toggleLocationItem } from '../../store/action';
+import clsx from 'clsx';
+import './main-page.css';
 
 type MainPageProps = {
-  offersCount: number;
   offers: Offers;
   city: City;
 }
 
-export default function MainPage({ offersCount, offers, city }: MainPageProps): JSX.Element {
-  const [activeCard, setActiveCard] = useState<Offer | undefined>(undefined);
+export default function MainPage({ offers, city }: MainPageProps): JSX.Element {
+  const [activeOffer, setActiveOffer] = useState<Offer | undefined>(undefined);
 
-  const handleMouseEnter = (card: Offer) => {
-    if (card !== undefined) {
-      const currentPoint = offers.find((offer) => offer === card);
-      setActiveCard(currentPoint);
-    }
+  const handleOfferCardHover = (offerCardId: string) => {
+    const currentOffer = offers.find((item) =>
+      item.id === offerCardId,
+    );
+    setActiveOffer(currentOffer);
   };
 
-  const handleMouseLeave = () => setActiveCard(undefined);
+  const currentLocationItem = useAppSelector((state) => state.currentLocationItem);
+  const dispatch = useAppDispatch();
 
+  const offerListByLocation = useAppSelector((state) => state.offers);
 
   return (
     <div className="page page--gray page--main">
@@ -68,36 +74,22 @@ export default function MainPage({ offersCount, offers, city }: MainPageProps): 
         <div className="tabs">
           <section className="locations container">
             <ul className="locations__list tabs__list">
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Paris</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Cologne</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Brussels</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item tabs__item--active">
-                  <span>Amsterdam</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Hamburg</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Dusseldorf</span>
-                </a>
-              </li>
+              {Object.values(LocationItem).map((item) => (
+                <li className="locations__item" key={item}>
+                  <Link to="/"
+                    className={clsx('locations__item-link', 'tabs__item', {
+                      'tabs__item--active': currentLocationItem === item
+                    }
+                    )}
+                    onClick={() => {
+                      dispatch(toggleLocationItem(item));
+                      dispatch(getOfferListByLocation());
+                    }}
+                  >
+                    <span>{item}</span>
+                  </Link>
+                </li>
+              ))}
             </ul>
           </section>
         </div>
@@ -105,7 +97,7 @@ export default function MainPage({ offersCount, offers, city }: MainPageProps): 
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{offersCount} places to stay in Amsterdam</b>
+              <b className="places__found">{`${offerListByLocation.length} places to stay in ${currentLocationItem}`}</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -132,14 +124,14 @@ export default function MainPage({ offersCount, offers, city }: MainPageProps): 
                   </li>
                 </ul>
               </form>
-              <PlaceList offers={offers} cardType={CardType.Cities} handleMouseEnter={handleMouseEnter} handleMouseLeave={handleMouseLeave} />
+              <PlaceList offers={offerListByLocation} cardType={CardType.Cities} onOfferCardHover={handleOfferCardHover} />
             </section>
             <div className="cities__right-section">
-              <Map city={city} offers={offers} activeCard={activeCard} cardType={CardType.Cities} />
+              <Map city={city} offers={offerListByLocation} activeOffer={activeOffer} cardType={CardType.Cities} />
             </div>
           </div>
         </div>
-      </main>
-    </div>
+      </main >
+    </div >
   );
 }

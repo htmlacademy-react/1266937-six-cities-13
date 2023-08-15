@@ -1,3 +1,4 @@
+import { MouseEvent } from 'react';
 import type { Offer } from '../../types/offer';
 import { clsx } from 'clsx';
 import { capitalizeFirstLetter, getRatingWidth } from '../../utils';
@@ -7,18 +8,29 @@ import { Link } from 'react-router-dom';
 type PlaceCardProps = {
   offer: Offer;
   cardType: typeof CardType[keyof typeof CardType];
-  handleMouseEnter?: (offer: Offer) => void;
-  handleMouseLeave?: () => void;
+  onOfferCardHover?: (offerCardId: string) => void;
 }
 
+export default function PlaceCard({ offer, cardType, onOfferCardHover }: PlaceCardProps): JSX.Element {
+  const {
+    isPremium,
+    previewImage,
+    title,
+    price,
+    isFavorite,
+    rating,
+    type,
+    id } = offer;
 
-export default function PlaceCard({ offer, handleMouseEnter, handleMouseLeave, cardType }: PlaceCardProps): JSX.Element {
-  const { isPremium, previewImage, title, price, isFavorite, rating, type, id } = offer;
+  const handleOfferCardHover = (evt: MouseEvent<HTMLElement>) => {
+    evt.preventDefault();
+    onOfferCardHover?.(offer.id);
+  };
 
   return (
-    <article className={clsx(`${cardType}__card`, 'place-card')}
-      onMouseEnter={() => handleMouseEnter?.(offer)}
-      onMouseLeave={() => handleMouseLeave?.()}
+    <article
+      className={clsx(`${cardType}__card`, 'place-card')}
+      onMouseEnter={handleOfferCardHover}
     >
       {isPremium &&
         <div className="place-card__mark">

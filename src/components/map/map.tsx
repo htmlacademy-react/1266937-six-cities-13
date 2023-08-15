@@ -1,7 +1,7 @@
 import { useRef, useEffect } from 'react';
 import { Icon, Marker, layerGroup } from 'leaflet';
 import { useMap } from '../../hooks/use-map';
-import { City, Offer, Offers } from '../../types/offer';
+import type { City, Offers, Offer } from '../../types/offer';
 import { URL_MARKER_DEFAULT, URL_MARKER_CURRENT, CardType, getPropertyByType } from '../../constants';
 import 'leaflet/dist/leaflet.css';
 import { clsx } from 'clsx';
@@ -10,7 +10,7 @@ import { clsx } from 'clsx';
 type MapProps = {
   city: City;
   offers: Offers;
-  activeCard?: Offer | undefined;
+  activeOffer?: Offer | undefined;
   cardType: typeof CardType[keyof typeof CardType];
 }
 
@@ -26,7 +26,7 @@ const currentCustomIcon = new Icon({
   iconAnchor: [13, 39],
 });
 
-export default function Map({ city, offers, activeCard, cardType }: MapProps): JSX.Element {
+export default function Map({ city, offers, activeOffer, cardType }: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
@@ -44,7 +44,7 @@ export default function Map({ city, offers, activeCard, cardType }: MapProps): J
 
         marker
           .setIcon(
-            activeCard !== undefined && offer === activeCard
+            activeOffer !== undefined && offer.id === activeOffer.id
               ? currentCustomIcon
               : defaultCustomIcon
           )
@@ -55,7 +55,7 @@ export default function Map({ city, offers, activeCard, cardType }: MapProps): J
         map.removeLayer(markerLayer);
       };
     }
-  }, [map, activeCard, offers]);
+  }, [map, activeOffer, offers]);
 
   return (
     <section
