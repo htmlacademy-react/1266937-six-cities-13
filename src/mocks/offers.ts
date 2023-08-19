@@ -96,6 +96,192 @@ export const offers: Offers = [
       zoom: 16,
     },
   },
+  {
+    id: '5',
+    title: 'Tile House',
+    type: 'house',
+    price: 138,
+    previewImage: 'img/apartment-01.jpg',
+    city: {
+      name: 'Paris',
+      location: {
+        latitude: 48.85661,
+        longitude: 2.351499,
+        zoom: 13
+      }
+    },
+    location: {
+      latitude: 48.868610000000004,
+      longitude: 2.342499,
+      zoom: 16
+    },
+    isFavorite: false,
+    isPremium: true,
+    rating: 2.8,
+  },
+  {
+    id: '6',
+    title: 'The Pondhouse - A Magical Place',
+    type: 'room',
+    price: 247,
+    previewImage: 'img/apartment-01.jpg',
+    city: {
+      name: 'Paris',
+      location: {
+        latitude: 48.85661,
+        longitude: 2.351499,
+        zoom: 13
+      }
+    },
+    location: {
+      latitude: 48.858610000000006,
+      longitude: 2.330499,
+      zoom: 16
+    },
+    isFavorite: false,
+    isPremium: true,
+    rating: 2.4,
+  },
+  {
+    id: '7',
+    title: 'House in countryside',
+    type: 'room',
+    price: 310,
+    previewImage: 'img/apartment-01.jpg',
+    isFavorite: false,
+    isPremium: true,
+    rating: 4.9,
+    city: {
+      name: 'Cologne',
+      location: {
+        latitude: 50.938361,
+        longitude: 6.959974,
+        zoom: 13
+      }
+    },
+    location: {
+      latitude: 50.934361,
+      longitude: 6.943974,
+      zoom: 16
+    },
+  },
+
+  {
+    id: '8',
+    title: 'Amazing and Extremely Central Flat',
+    type: 'apartment',
+    price: 215,
+    previewImage: 'img/apartment-02.jpg',
+    isFavorite: true,
+    isPremium: false,
+    rating: 4.8,
+    city: {
+      name: 'Cologne',
+      location: {
+        latitude: 50.938361,
+        longitude: 6.959974,
+        zoom: 13,
+      }
+    },
+    location: {
+      latitude: 50.947361,
+      longitude: 6.9799739999999995,
+      zoom: 16,
+    },
+  },
+
+  {
+    id: '9',
+    title: 'Amazing and Extremely Central Flat',
+    type: 'private room',
+    price: 105,
+    previewImage: 'img/apartment-03.jpg',
+    isFavorite: true,
+    isPremium: true,
+    rating: 3.4,
+    city: {
+      name: 'Cologne',
+      location: {
+        latitude: 50.938361,
+        longitude: 6.959974,
+        zoom: 13,
+      }
+    },
+    location: {
+      latitude: 50.960361,
+      longitude: 6.967974,
+      zoom: 16,
+    },
+  },
+  {
+    id: '10',
+    title: 'Amazing and Extremely Central Flat',
+    type: 'apartment',
+    price: 402,
+    previewImage: 'img/apartment-02.jpg',
+    isFavorite: true,
+    isPremium: false,
+    rating: 4.8,
+    city: {
+      name: 'Brussels',
+      location: {
+        latitude: 50.846557,
+        longitude: 4.351697,
+        zoom: 13
+      }
+    },
+    location: {
+      latitude: 50.854557,
+      longitude: 4.364697,
+      zoom: 16
+    },
+  },
+  {
+    id: '11',
+    title: 'Tile House',
+    type: 'house',
+    price: 93,
+    previewImage: 'img/apartment-01.jpg',
+    city: {
+      name: 'Hamburg',
+      location: {
+        latitude: 53.550341,
+        longitude: 10.000654,
+        zoom: 13
+      }
+    },
+    location: {
+      latitude: 53.563341,
+      longitude: 10.019654000000001,
+      zoom: 16
+    },
+    isFavorite: false,
+    isPremium: true,
+    rating: 2.8,
+  },
+  {
+    id: '12',
+    title: 'The Pondhouse - A Magical Place',
+    type: 'room',
+    price: 232,
+    previewImage: 'img/apartment-01.jpg',
+    city: {
+      name: 'Dusseldorf',
+      location: {
+        latitude: 51.225402,
+        longitude: 6.776314,
+        zoom: 13,
+      }
+    },
+    location: {
+      latitude: 51.210402,
+      longitude: 6.798314,
+      zoom: 16,
+    },
+    isFavorite: false,
+    isPremium: true,
+    rating: 2.4,
+  },
 ];
 
 export const extendedOffers: ExtendedOffer[] = [

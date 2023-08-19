@@ -1,20 +1,20 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { toggleLocationItem, getOfferListByLocation } from './action';
-import { DEFAULT_LOCATION_ITEM, LocationItem } from '../constants';
+import { changeLocationItem, getOfferList } from './action';
+import { DEFAULT_LOCATION_ITEM } from '../constants';
 import { offers } from '../mocks/offers';
 
 const initialState = {
-  currentLocationItem: DEFAULT_LOCATION_ITEM as keyof typeof LocationItem,
+  currentLocationItem: DEFAULT_LOCATION_ITEM,
   offers,
 };
 
 const reducer = createReducer(initialState, (builder) => {
   builder
-    .addCase(toggleLocationItem, (state, action) => {
+    .addCase(changeLocationItem, (state, action) => {
       state.currentLocationItem = action.payload;
     })
-    .addCase(getOfferListByLocation, (state) => {
-      state.offers = offers.filter((offer) => offer.city.name === state.currentLocationItem);
+    .addCase(getOfferList, (state) => {
+      state.offers = offers;
     });
 });
 

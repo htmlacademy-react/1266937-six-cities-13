@@ -20,14 +20,14 @@ export const CardType = {
   Offer: 'offer',
 } as const;
 
-export const LocationItem = {
-  Paris: 'Paris',
-  Cologne: 'Cologne',
-  Brussels: 'Brussels',
-  Amsterdam: 'Amsterdam',
-  Hamburg: 'Hamburg',
-  Dusseldorf: 'Dusseldorf',
-} as const;
+export enum LocationItem {
+  Paris = 'Paris',
+  Cologne = 'Cologne',
+  Brussels = 'Brussels',
+  Amsterdam = 'Amsterdam',
+  Hamburg = 'Hamburg',
+  Dusseldorf = 'Dusseldorf',
+}
 
 export const DEFAULT_LOCATION_ITEM = LocationItem.Paris;
 
@@ -73,3 +73,10 @@ export const getPropertyByType = (type: string) => {
       };
   }
 };
+
+export enum sortType {
+  Popular = 'Popular',
+  PriceLowToHigh = 'Price: low to high',
+  PriceHighToLow = 'Price: high to low',
+  TopRatedFirst = 'Top rated first',
+}

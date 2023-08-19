@@ -1,6 +1,6 @@
 import { createAction } from '@reduxjs/toolkit';
 import { LocationItem } from '../constants';
 
-export const toggleLocationItem = createAction<typeof LocationItem[keyof typeof LocationItem]>('offers/toggleLocationItem');
+export const changeLocationItem = createAction<LocationItem>('offers/changeLocationItem');
 
-export const getOfferListByLocation = createAction('offers/getOfferListByLocation');
+export const getOfferList = createAction('offers/getOfferList');

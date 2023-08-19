@@ -1,33 +1,30 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useAppSelector, useAppDispatch } from '../../hooks';
+import { useAppSelector } from '../../hooks';
 import PlaceList from '../../components/place-list/place-list';
 import Map from '../../components/map/map';
-import { CardType, LocationItem } from '../../constants';
-import type { Offers, Offer, City } from '../../types/offer';
-import { getOfferListByLocation, toggleLocationItem } from '../../store/action';
-import clsx from 'clsx';
-import './main-page.css';
+import { CardType } from '../../constants';
+import type { Offer, City } from '../../types/offer';
+import LocationList from '../../components/location-list/location-list';
 
 type MainPageProps = {
-  offers: Offers;
   city: City;
 }
 
-export default function MainPage({ offers, city }: MainPageProps): JSX.Element {
+export default function MainPage({ city }: MainPageProps): JSX.Element {
   const [activeOffer, setActiveOffer] = useState<Offer | undefined>(undefined);
 
-  const handleOfferCardHover = (offerCardId: string) => {
+  const currentLocationItem = useAppSelector((state) => state.currentLocationItem);
+
+  const offers = useAppSelector((state) => state.offers);
+
+  const offerListByLocation = offers.filter((offer) => offer.city.name === currentLocationItem);
+
+  const handleOfferCardHover = (offerCardId: string | undefined) => {
     const currentOffer = offers.find((item) =>
       item.id === offerCardId,
     );
     setActiveOffer(currentOffer);
   };
-
-  const currentLocationItem = useAppSelector((state) => state.currentLocationItem);
-  const dispatch = useAppDispatch();
-
-  const offerListByLocation = useAppSelector((state) => state.offers);
 
   return (
     <div className="page page--gray page--main">
@@ -73,31 +70,16 @@ export default function MainPage({ offers, city }: MainPageProps): JSX.Element {
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
-            <ul className="locations__list tabs__list">
-              {Object.values(LocationItem).map((item) => (
-                <li className="locations__item" key={item}>
-                  <Link to="/"
-                    className={clsx('locations__item-link', 'tabs__item', {
-                      'tabs__item--active': currentLocationItem === item
-                    }
-                    )}
-                    onClick={() => {
-                      dispatch(toggleLocationItem(item));
-                      dispatch(getOfferListByLocation());
-                    }}
-                  >
-                    <span>{item}</span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            <LocationList currentLocationItem={currentLocationItem} />
           </section>
         </div>
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{`${offerListByLocation.length} places to stay in ${currentLocationItem}`}</b>
+              <b className="places__found">
+                {`${offerListByLocation.length} ${offerListByLocation.length > 1 ? 'places' : 'place'} to stay in ${currentLocationItem}`}
+              </b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
