@@ -16,6 +16,7 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(getOfferList, (state) => {
       state.offers = offers;
     });
+  // changeSortOption
 });
 
 export { reducer };

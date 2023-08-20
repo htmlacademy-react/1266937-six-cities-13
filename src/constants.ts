@@ -74,9 +74,11 @@ export const getPropertyByType = (type: string) => {
   }
 };
 
-export enum sortType {
-  Popular = 'Popular',
-  PriceLowToHigh = 'Price: low to high',
-  PriceHighToLow = 'Price: high to low',
-  TopRatedFirst = 'Top rated first',
-}
+export const SortOption = {
+  Popular: 'Popular',
+  PriceLowToHigh: 'Price: low to high',
+  PriceHighToLow: 'Price: high to low',
+  TopRatedFirst: 'Top rated first',
+};
+
+export const DEFAULT_SORT_OPTION = SortOption.Popular;

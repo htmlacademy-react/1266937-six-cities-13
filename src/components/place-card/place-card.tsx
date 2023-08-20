@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 type PlaceCardProps = {
   offer: Offer;
   cardType: typeof CardType[keyof typeof CardType];
-  onOfferCardHover?: (offerCardId: string | undefined) => void;
+  onOfferCardHover?: (offerCardId: Offer['id'] | undefined) => void;
 }
 
 export default function PlaceCard({ offer, cardType, onOfferCardHover }: PlaceCardProps): JSX.Element {
