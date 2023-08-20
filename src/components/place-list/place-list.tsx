@@ -6,7 +6,7 @@ import clsx from 'clsx';
 type PlaceListProps = {
   offers: Offers;
   cardType: typeof CardType[keyof typeof CardType];
-  onOfferCardHover?: (offerCardId: string) => void;
+  onOfferCardHover?: (offerCardId: string | undefined) => void;
 }
 
 export default function PlaceList({ offers, cardType, onOfferCardHover }: PlaceListProps) {

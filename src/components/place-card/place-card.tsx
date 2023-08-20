@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 type PlaceCardProps = {
   offer: Offer;
   cardType: typeof CardType[keyof typeof CardType];
-  onOfferCardHover?: (offerCardId: string) => void;
+  onOfferCardHover?: (offerCardId: Offer['id'] | undefined) => void;
 }
 
 export default function PlaceCard({ offer, cardType, onOfferCardHover }: PlaceCardProps): JSX.Element {
@@ -27,10 +27,13 @@ export default function PlaceCard({ offer, cardType, onOfferCardHover }: PlaceCa
     onOfferCardHover?.(offer.id);
   };
 
+  const handleOfferCardUnhover = () => onOfferCardHover?.(undefined);
+
   return (
     <article
       className={clsx(`${cardType}__card`, 'place-card')}
       onMouseEnter={handleOfferCardHover}
+      onMouseLeave={handleOfferCardUnhover}
     >
       {isPremium &&
         <div className="place-card__mark">
