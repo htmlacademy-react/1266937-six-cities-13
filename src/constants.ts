@@ -31,6 +31,7 @@ export enum LocationItem {
 
 export const DEFAULT_LOCATION_ITEM = LocationItem.Paris;
 
+// TODO
 export enum RatingTitle {
   perfect = 5,
   good = 4,
@@ -42,6 +43,7 @@ export enum RatingTitle {
 export const URL_MARKER_DEFAULT = '../img/pin.svg';
 export const URL_MARKER_CURRENT = '../img/pin-active.svg';
 
+// TODO
 export const getPropertyByType = (type: string) => {
   switch (type) {
     case CardType.Cities:
@@ -79,6 +81,6 @@ export const SortOption = {
   PriceLowToHigh: 'Price: low to high',
   PriceHighToLow: 'Price: high to low',
   TopRatedFirst: 'Top rated first',
-};
+} as const;
 
 export const DEFAULT_SORT_OPTION = SortOption.Popular;
