@@ -5,10 +5,11 @@ export const AppRoute = {
   Offer: '/offer/:id',
 } as const;
 
-export const AuthorizationStatus = {
-  Auth: 'AUTH',
-  NoAuth: 'NO_AUTH',
-} as const;
+export enum AuthorizationStatus {
+  Auth = 'AUTH',
+  NoAuth = 'NO_AUTH',
+  Unknown = 'Unknown',
+}
 
 export const MAX_RATING = 5;
 export const DEFAULT_RATING = 0;
@@ -31,6 +32,7 @@ export enum LocationItem {
 
 export const DEFAULT_LOCATION_ITEM = LocationItem.Paris;
 
+// TODO
 export enum RatingTitle {
   perfect = 5,
   good = 4,
@@ -42,6 +44,7 @@ export enum RatingTitle {
 export const URL_MARKER_DEFAULT = '../img/pin.svg';
 export const URL_MARKER_CURRENT = '../img/pin-active.svg';
 
+// TODO
 export const getPropertyByType = (type: string) => {
   switch (type) {
     case CardType.Cities:
@@ -79,6 +82,21 @@ export const SortOption = {
   PriceLowToHigh: 'Price: low to high',
   PriceHighToLow: 'Price: high to low',
   TopRatedFirst: 'Top rated first',
-};
+} as const;
 
 export const DEFAULT_SORT_OPTION = SortOption.Popular;
+
+// API
+export const BACKEND_URL = 'https://13.design.pages.academy/six-cities';
+export const REQUEST_TIMEOUT = 5000;
+
+export enum APIRoute {
+  Offers = '/offers',
+  Reviews = '/comments',
+
+  Favorites = '/favorite',
+}
+
+export const AUTH_TOKEN_KEY_NAME = 'six-cities-token';
+
+export const ERROR_TIMEOUT = 2000;

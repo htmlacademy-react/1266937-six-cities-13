@@ -1,46 +1,55 @@
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import ReviewForm from '../../components/review-form/review-form';
 import ReviewList from '../../components/review-list/review-list';
 import PlaceList from '../../components/place-list/place-list';
 import Map from '../../components/map/map';
-import type { Reviews } from '../../types/review';
-import type { City, ExtendedOffer, Offers } from '../../types/offer';
 import { CardType } from '../../constants';
-import { useParams } from 'react-router-dom';
 import { getRatingWidth, capitalizeFirstLetter } from '../../utils';
+import {
+  fetchOfferAction,
+  fetchReviewsAction,
+  fetchNearbyPlacesAction
+} from '../../store/api-actions';
 import clsx from 'clsx';
 
-
-type OfferPageProps = {
-  reviews: Reviews;
-  extendedOffers: ExtendedOffer[];
-  city: City;
-  offers: Offers;
-}
-
-export default function OfferPage({ reviews, extendedOffers, offers, city }: OfferPageProps): JSX.Element {
+export default function OfferPage(): JSX.Element {
+  const offer = useAppSelector((state) => state.extendedOffer);
   const params = useParams();
-  const activeOffer = extendedOffers.find((offer) => offer.id === params.id) as ExtendedOffer;
-
-  const nearPlaces = offers
-    .filter((offer) => offer.id !== activeOffer.id
-      .slice(0, 3));
-
-  const activeMarker = offers.find((offer) => offer.id === activeOffer.id);
 
   const {
     title,
     price,
     images,
     isPremium,
-    rating, type,
+    rating,
+    type,
     bedrooms,
     maxAdults,
     goods,
     host,
     description,
-    isFavorite } = activeOffer;
+    isFavorite } = offer;
 
   const { name, avatarUrl, isPro } = host;
+
+  const reviews = useAppSelector((state) => state.reviews);
+  const nearbyPlaces = useAppSelector((state) => state.nearbyPlaces);
+
+  const offerId = params.id;
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+
+    if (offerId !== undefined) {
+      dispatch(fetchOfferAction(offerId));
+      dispatch(fetchReviewsAction(offerId));
+      dispatch(fetchNearbyPlacesAction(offerId));
+    }
+
+  }, [offerId, dispatch]);
 
   return (
     <div className="page">
@@ -189,14 +198,14 @@ export default function OfferPage({ reviews, extendedOffers, offers, city }: Off
               </section>
             </div>
           </div>
-          <Map offers={[...nearPlaces, activeMarker]} city={city} cardType={CardType.Offer} activeOffer={activeMarker} />
+          <Map offers={nearbyPlaces} city={offer.city} cardType={CardType.Offer} />
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">
               Other places in the neighbourhood
             </h2>
-            <PlaceList offers={nearPlaces} cardType={CardType.Nearby} />
+            <PlaceList offers={nearbyPlaces} cardType={CardType.Nearby} />
           </section>
         </div>
       </main>

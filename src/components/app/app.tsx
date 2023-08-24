@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useAppSelector } from '../../hooks';
 import { AppRoute, AuthorizationStatus } from '../../constants';
 import PrivateRoute from '../private-route/private-route';
 import MainPage from '../../pages/main-page/main-page';
@@ -6,23 +7,23 @@ import LoginPage from '../../pages/login-page/login-page';
 import FavoritesPage from '../../pages/favorites-page/favorites-page';
 import OfferPage from '../../pages/offer-page/offer-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
-import type { Offers, City, ExtendedOffer, } from '../../types/offer';
-import type { Reviews } from '../../types/review';
+import LoadingScreen from '../../components/loading-screen/loading-screen';
 
-type AppScreenProps = {
-  offers: Offers;
-  reviews: Reviews;
-  city: City;
-  extendedOffers: ExtendedOffer[];
-}
+export default function App(): JSX.Element {
+  const isDataLoading = useAppSelector((state) => state.isDataLoading);
 
-export default function App({ offers, extendedOffers, reviews, city }: AppScreenProps): JSX.Element {
+  if (isDataLoading) {
+    return (
+      <LoadingScreen />
+    );
+  }
+
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Main}
-          element={<MainPage city={city} offers={offers} />}
+          element={<MainPage />}
         />
         <Route
           path={AppRoute.Login}
@@ -34,13 +35,13 @@ export default function App({ offers, extendedOffers, reviews, city }: AppScreen
             <PrivateRoute
               authorizationStatus={AuthorizationStatus.Auth}
             >
-              <FavoritesPage offers={offers} />
+              <FavoritesPage />
             </PrivateRoute>
           }
         />
         <Route
           path={AppRoute.Offer}
-          element={<OfferPage city={city} offers={offers} extendedOffers={extendedOffers} reviews={reviews} />}
+          element={<OfferPage />}
         />
         <Route
           path='*'

@@ -19,7 +19,7 @@ export default function PlaceList({ offers, cardType, onOfferCardHover }: PlaceL
     >
       {offers.map((offer) => (
         <PlaceCard
-          key={crypto.randomUUID()}
+          key={offer.id}
           offer={offer}
           cardType={cardType}
           onOfferCardHover={onOfferCardHover}

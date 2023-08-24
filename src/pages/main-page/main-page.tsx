@@ -1,38 +1,49 @@
 import { useState } from 'react';
 import { useAppSelector } from '../../hooks';
-import type { Offer, City } from '../../types/offer';
+import type { Offer } from '../../types/offer';
 import PlaceList from '../../components/place-list/place-list';
 import Map from '../../components/map/map';
 import LocationList from '../../components/location-list/location-list';
 import SortOptions from '../../components/sort-options/sort-options';
 import { CardType, DEFAULT_SORT_OPTION } from '../../constants';
 import { sortMap } from '../../utils';
-import { SortType } from '../../types/sort';
+import type { City } from '../../types/offer';
+import type { SortType } from '../../types/sort';
 
-type MainPageProps = {
-  city: City;
-}
-
-export default function MainPage({ city }: MainPageProps): JSX.Element {
-  const [activeOffer, setActiveOffer] = useState<Offer | undefined>(undefined);
-
+export default function MainPage(): JSX.Element {
   const currentLocationItem = useAppSelector((state) => state.currentLocationItem);
 
   const offers = useAppSelector((state) => state.offers);
 
   const offerListByLocation = offers.filter((offer) => offer.city.name === currentLocationItem);
 
+  const [activeOffer, setActiveOffer] = useState<Offer | undefined>(undefined);
+
+  const [activeSort, setActiveSort] = useState<SortType>(DEFAULT_SORT_OPTION);
+
   const handleOfferCardHover = (offerCardId: Offer['id'] | undefined) => {
     const currentOffer = offers.find((item) =>
       item.id === offerCardId
     );
+
+    if (activeOffer === undefined) {
+      return undefined;
+    }
+
     setActiveOffer(currentOffer);
   };
 
-  const [activeSort, setActiveSort] = useState<SortType>(DEFAULT_SORT_OPTION);
-
   const handleSortingChange = (sortOption: SortType) => {
     setActiveSort(sortOption);
+  };
+
+  const currentCity: City = {
+    name: 'Amsterdam',
+    location: {
+      latitude: 52.35514938496378,
+      longitude: 4.673877537499948,
+      zoom: 8,
+    }
   };
 
   return (
@@ -87,7 +98,7 @@ export default function MainPage({ city }: MainPageProps): JSX.Element {
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">
-                {`${offerListByLocation.length} ${offerListByLocation.length > 1 ? 'places' : 'place'} to stay in ${currentLocationItem}`}
+                {/* {`${offerListByLocation.length} ${offerListByLocation.length === 1 ? 'place' : 'places'} to stay in ${currentLocationItem}`} */}
               </b>
               <SortOptions
                 onSortingChange={handleSortingChange}
@@ -101,7 +112,7 @@ export default function MainPage({ city }: MainPageProps): JSX.Element {
             </section>
             <div className="cities__right-section">
               <Map
-                city={city}
+                city={currentCity}
                 offers={offerListByLocation}
                 activeOffer={activeOffer}
                 cardType={CardType.Cities}
