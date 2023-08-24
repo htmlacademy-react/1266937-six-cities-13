@@ -6,7 +6,6 @@ import ReviewList from '../../components/review-list/review-list';
 import PlaceList from '../../components/place-list/place-list';
 import Map from '../../components/map/map';
 import { CardType } from '../../constants';
-import type { Offer, ExtendedOffer } from '../../types/offer';
 import { getRatingWidth, capitalizeFirstLetter } from '../../utils';
 import {
   fetchOfferAction,
