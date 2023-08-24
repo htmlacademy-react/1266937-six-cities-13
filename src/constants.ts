@@ -5,10 +5,11 @@ export const AppRoute = {
   Offer: '/offer/:id',
 } as const;
 
-export const AuthorizationStatus = {
-  Auth: 'AUTH',
-  NoAuth: 'NO_AUTH',
-} as const;
+export enum AuthorizationStatus {
+  Auth = 'AUTH',
+  NoAuth = 'NO_AUTH',
+  Unknown = 'Unknown',
+}
 
 export const MAX_RATING = 5;
 export const DEFAULT_RATING = 0;
@@ -84,3 +85,18 @@ export const SortOption = {
 } as const;
 
 export const DEFAULT_SORT_OPTION = SortOption.Popular;
+
+// API
+export const BACKEND_URL = 'https://13.design.pages.academy/six-cities';
+export const REQUEST_TIMEOUT = 5000;
+
+export enum APIRoute {
+  Offers = '/offers',
+  Reviews = '/comments',
+
+  Favorites = '/favorite',
+}
+
+export const AUTH_TOKEN_KEY_NAME = 'six-cities-token';
+
+export const ERROR_TIMEOUT = 2000;

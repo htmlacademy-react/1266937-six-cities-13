@@ -2,23 +2,21 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import App from './components/app/app';
+import ErrorMessage from './components/error-message/error-message';
 import { store } from './store';
-import { extendedOffers, offers } from './mocks/offers';
-import { reviews } from './mocks/reviews';
+import { fetchOffersAction } from './store/api-actions';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
+store.dispatch(fetchOffersAction());
+
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App
-        offers={offers}
-        reviews={reviews}
-        city={offers[0].city}
-        extendedOffers={extendedOffers}
-      />
+      <ErrorMessage />
+      <App />
     </Provider>
   </React.StrictMode>
 );

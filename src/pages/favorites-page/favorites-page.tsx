@@ -1,15 +1,12 @@
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import PlaceCard from '../../components/place-card/place-card';
-import type { Offers } from '../../types/offer';
 import { CardType } from '../../constants';
-
-type FavoritesPageProps = {
-  offers: Offers;
-}
+import { fetchFavoritesAction } from '../../store/api-actions';
 
 
-export default function FavoritesPage({ offers }: FavoritesPageProps): JSX.Element {
+export default function FavoritesPage(): JSX.Element {
 
-  const favorites = offers.filter((offer) => offer.isFavorite);
+  const favorites = useAppSelector((state) => state.favorites);
 
   const cities: string[] = [];
   favorites.forEach((item) => {
@@ -17,6 +14,10 @@ export default function FavoritesPage({ offers }: FavoritesPageProps): JSX.Eleme
   });
 
   const locations = [...new Set(cities)];
+
+  const dispatch = useAppDispatch();
+
+  dispatch(fetchFavoritesAction());
 
 
   return (
