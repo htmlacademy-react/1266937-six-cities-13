@@ -1,7 +1,7 @@
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { AppDispatch, RootState } from '../types/state.js';
-import type { Review, Reviews } from '../types/review.js';
+import type { Reviews } from '../types/review.js';
 import type { Offers, Offer, ExtendedOffer } from '../types/offer';
 import type { AuthData } from '../types/auth-data';
 import type { UserData } from '../types/user-data';
@@ -12,7 +12,6 @@ import {
   fetchOffer,
   fetchReviews,
   fetchNearbyPlaces,
-  fetchFavorites,
   setDataLoadingStatus,
   requireAuthorization,
   redirectToRoute,
