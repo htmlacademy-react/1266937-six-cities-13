@@ -1,14 +1,15 @@
 import { Link } from 'react-router-dom';
+import { AppRoute } from '../../constants';
 import './not-found-page.css';
 
-export default function NotFoundPage(): JSX.Element {
+function NotFoundPage(): JSX.Element {
   return (
     <div className="page page--main">
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <a className="header__logo-link" href="main.html">
+              <Link className="header__logo-link" to={AppRoute.Main}>
                 <img
                   className="header__logo"
                   src="img/logo.svg"
@@ -16,7 +17,7 @@ export default function NotFoundPage(): JSX.Element {
                   width={81}
                   height={41}
                 />
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -28,3 +29,5 @@ export default function NotFoundPage(): JSX.Element {
     </div >
   );
 }
+
+export default NotFoundPage;
