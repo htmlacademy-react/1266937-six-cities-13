@@ -1,11 +1,10 @@
+import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import PlaceCard from '../../components/place-card/place-card';
 import { CardType } from '../../constants';
 import { fetchFavoritesAction } from '../../store/api-actions';
 
-
 export default function FavoritesPage(): JSX.Element {
-
   const favorites = useAppSelector((state) => state.favorites);
 
   const cities: string[] = [];
@@ -17,8 +16,9 @@ export default function FavoritesPage(): JSX.Element {
 
   const dispatch = useAppDispatch();
 
-  dispatch(fetchFavoritesAction());
-
+  useEffect(() => {
+    dispatch(fetchFavoritesAction());
+  }, [dispatch]);
 
   return (
     < div className="page" >

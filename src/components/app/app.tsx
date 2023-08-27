@@ -11,8 +11,9 @@ import LoadingScreen from '../../components/loading-screen/loading-screen';
 
 export default function App(): JSX.Element {
   const isDataLoading = useAppSelector((state) => state.isDataLoading);
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
 
-  if (isDataLoading) {
+  if (authorizationStatus === AuthorizationStatus.Unknown || isDataLoading) {
     return (
       <LoadingScreen />
     );
@@ -33,7 +34,7 @@ export default function App(): JSX.Element {
           path={AppRoute.Favorites}
           element={
             <PrivateRoute
-              authorizationStatus={AuthorizationStatus.Auth}
+              authorizationStatus={authorizationStatus}
             >
               <FavoritesPage />
             </PrivateRoute>

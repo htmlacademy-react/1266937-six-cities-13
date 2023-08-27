@@ -1,4 +1,37 @@
-export default function LoginPage(): JSX.Element {
+import { FormEvent, useRef } from 'react';
+import { Navigate } from 'react-router-dom';
+import { useAppSelector, useAppDispatch } from '../../hooks/index';
+import type { AuthData } from '../../types/auth-data';
+import { loginAction } from '../../store/api-actions';
+import { AuthorizationStatus, AppRoute } from '../../constants';
+
+function LoginPage(): JSX.Element {
+  const loginRef = useRef<HTMLInputElement | null>(null);
+  const passwordRef = useRef<HTMLInputElement | null>(null);
+
+  const dispatch = useAppDispatch();
+
+  const onSubmit = (authData: AuthData) => {
+    dispatch(loginAction(authData));
+  };
+
+  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+
+    if (loginRef.current !== null && passwordRef.current !== null) {
+      onSubmit({
+        login: loginRef.current.value,
+        password: passwordRef.current.value,
+      });
+    }
+  };
+
+  // const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+
+  // if (authorizationStatus === AuthorizationStatus.Auth) {
+  //   return <Navigate to={AppRoute.Main} />;
+  // }
+
   return (
     <div className="page page--gray page--login">
       <header className="header">
@@ -22,7 +55,10 @@ export default function LoginPage(): JSX.Element {
         <div className="page__login-container container">
           <section className="login">
             <h1 className="login__title">Sign in</h1>
-            <form className="login__form form" action="#" method="post">
+            <form
+              className="login__form form"
+              onSubmit={handleSubmit}
+            >
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>
                 <input
@@ -30,6 +66,7 @@ export default function LoginPage(): JSX.Element {
                   type="email"
                   name="email"
                   placeholder="Email"
+                  ref={loginRef}
                   required
                 />
               </div>
@@ -40,6 +77,7 @@ export default function LoginPage(): JSX.Element {
                   type="password"
                   name="password"
                   placeholder="Password"
+                  ref={passwordRef}
                   required
                 />
               </div>
@@ -60,3 +98,5 @@ export default function LoginPage(): JSX.Element {
     </div>
   );
 }
+
+export default LoginPage;

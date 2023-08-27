@@ -20,3 +20,5 @@ export const fetchReviews = createAction<Reviews>('data/fetchReviews');
 export const fetchNearbyPlaces = createAction<Offers>('data/fetchNearbyPlaces');
 
 export const fetchFavorites = createAction<Offers>('data/fetchFavorites');
+
+export const redirectToRoute = createAction<string>('user/redirectToRoute');

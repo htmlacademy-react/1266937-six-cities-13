@@ -93,8 +93,9 @@ export const REQUEST_TIMEOUT = 5000;
 export enum APIRoute {
   Offers = '/offers',
   Reviews = '/comments',
-
+  Login = '/login',
   Favorites = '/favorite',
+  Logout = '/logout',
 }
 
 export const AUTH_TOKEN_KEY_NAME = 'six-cities-token';

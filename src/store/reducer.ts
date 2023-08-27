@@ -17,7 +17,7 @@ import { Reviews } from '../types/review';
 type OfferState = {
   currentLocationItem: LocationItem;
   offers: Offers;
-  extendedOffer: ExtendedOffer;
+  offer: ExtendedOffer;
   reviews: Reviews;
   nearbyPlaces: Offers;
   favorites: Offers;
@@ -29,7 +29,7 @@ type OfferState = {
 const initialState: OfferState = {
   currentLocationItem: DEFAULT_LOCATION_ITEM,
   offers: [],
-  extendedOffer: {} as ExtendedOffer,
+  offer: {} as ExtendedOffer,
   reviews: [],
   nearbyPlaces: [],
   favorites: [],
@@ -57,7 +57,7 @@ const reducer = createReducer(initialState, (builder) => {
       state.error = action.payload;
     })
     .addCase(fetchOffer, (state, action) => {
-      state.extendedOffer = action.payload;
+      state.offer = action.payload;
     })
     .addCase(fetchReviews, (state, action) => {
       state.reviews = action.payload;
