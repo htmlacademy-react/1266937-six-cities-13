@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { useAppSelector } from '../../hooks';
 import { AppRoute, AuthorizationStatus } from '../../constants';
 import PrivateRoute from '../private-route/private-route';
@@ -9,6 +9,8 @@ import OfferPage from '../../pages/offer-page/offer-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import LoadingScreen from '../../components/loading-screen/loading-screen';
 import Layout from '../layout/layout';
+import HistoryRouter from '../history-route/history-route';
+import browserHistory from '../../browser-history';
 
 export default function App(): JSX.Element {
   const isDataLoading = useAppSelector((state) => state.isDataLoading);
@@ -21,7 +23,7 @@ export default function App(): JSX.Element {
   }
 
   return (
-    <BrowserRouter>
+    <HistoryRouter history={browserHistory}>
       <Routes>
         <Route path={AppRoute.Main} element={<Layout />}>
           <Route
@@ -52,6 +54,6 @@ export default function App(): JSX.Element {
           element={<NotFoundPage />}
         />
       </Routes>
-    </BrowserRouter>
+    </HistoryRouter>
   );
 }
