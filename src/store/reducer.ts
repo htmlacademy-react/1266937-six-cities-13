@@ -9,6 +9,8 @@ import {
   requireAuthorization,
   setError,
   setDataLoadingStatus,
+  setDataPostingStatus,
+  postComment,
 } from './action';
 import { AuthorizationStatus, DEFAULT_LOCATION_ITEM, LocationItem } from '../constants';
 import { Offers, ExtendedOffer } from '../types/offer';
@@ -24,6 +26,7 @@ type OfferState = {
   authorizationStatus: AuthorizationStatus;
   error: string | null;
   isDataLoading: boolean;
+  isDataPosting: boolean;
 };
 
 const initialState: OfferState = {
@@ -35,7 +38,8 @@ const initialState: OfferState = {
   favorites: [],
   authorizationStatus: AuthorizationStatus.Unknown,
   error: null,
-  isDataLoading: true,
+  isDataLoading: false,
+  isDataPosting: false,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -46,7 +50,6 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(fetchOffers, (state, action) => {
       state.offers = action.payload;
     })
-    // changeSortOption
     .addCase(requireAuthorization, (state, action) => {
       state.authorizationStatus = action.payload;
     })
@@ -60,13 +63,19 @@ const reducer = createReducer(initialState, (builder) => {
       state.offer = action.payload;
     })
     .addCase(fetchReviews, (state, action) => {
-      state.reviews = action.payload;
+      state.reviews = action.payload.slice(0, 10);
     })
     .addCase(fetchNearbyPlaces, (state, action) => {
       state.nearbyPlaces = action.payload;
     })
     .addCase(fetchFavorites, (state, action) => {
       state.favorites = action.payload;
+    })
+    .addCase(setDataPostingStatus, (state, action) => {
+      state.isDataPosting = action.payload;
+    })
+    .addCase(postComment, (state, action) => {
+      state.reviews.push(action.payload);
     });
 });
 

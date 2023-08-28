@@ -10,7 +10,6 @@ export const useMap = (mapRef: MutableRefObject<HTMLElement | null>, city: City)
   useEffect(() => {
     if (mapRef.current !== null && !isRenderedRef.current) {
       const instance = new Map(mapRef.current, {
-        // ссылка на элемент, куда отрендерить карту
         center: {
           lat: city.location.latitude,
           lng: city.location.longitude,
@@ -25,16 +24,13 @@ export const useMap = (mapRef: MutableRefObject<HTMLElement | null>, city: City)
           attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
         },
       );
-      // Метод titleLayer позволяет подключить определенный слой карты
 
       instance.addLayer(layer);
-      // Метод указывает к какому объекту карты добавить подключенный слой
 
       setMap(instance);
       isRenderedRef.current = true;
     }
   }, [mapRef, city]);
-  // Эффект будет срабатывать только когда в компоненте useMap будут обновлены значения переменных mapRef и city
 
   return map;
 };

@@ -6,7 +6,7 @@ import ReviewList from '../../components/review-list/review-list';
 import PlaceList from '../../components/place-list/place-list';
 import Map from '../../components/map/map';
 import NotFoundPage from '../not-found-page/not-found-page';
-import { CardType } from '../../constants';
+import { AuthorizationStatus, CardType } from '../../constants';
 import { getRatingWidth, capitalizeFirstLetter } from '../../utils';
 import {
   fetchOfferAction,
@@ -51,9 +51,10 @@ export default function OfferPage(): JSX.Element {
 
   }, [offerId, dispatch]);
 
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+
   return (
     <div className="page">
-      {/* Header */}
       <main className="page__main page__main--offer">
         {(id === undefined && isDataLoading === false) ?? <NotFoundPage />}
         {id === undefined || isDataLoading
@@ -162,7 +163,7 @@ export default function OfferPage(): JSX.Element {
                     </span>
                   </h2>
                   <ReviewList reviews={reviews} />
-                  <ReviewForm />
+                  {authorizationStatus === AuthorizationStatus.Auth && < ReviewForm id={id} />}
                 </section>
               </div>
             </div>
