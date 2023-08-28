@@ -1,10 +1,11 @@
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { AppDispatch, RootState } from '../types/state.js';
-import type { Reviews } from '../types/review.js';
+import type { Review, Reviews } from '../types/review.js';
 import type { Offers, Offer, ExtendedOffer } from '../types/offer';
 import type { AuthData } from '../types/auth-data';
 import type { UserData } from '../types/user-data';
+import type { CommentData } from '../types/comment-data';
 import { APIRoute, ERROR_TIMEOUT, AppRoute, AuthorizationStatus } from './../constants';
 import {
   fetchOffers,
@@ -12,9 +13,12 @@ import {
   fetchOffer,
   fetchReviews,
   fetchNearbyPlaces,
+  fetchFavorites,
   setDataLoadingStatus,
   requireAuthorization,
   redirectToRoute,
+  setDataPostingStatus,
+  postComment,
 } from './action';
 import { store } from '../store/index';
 import { saveToken, dropToken } from '../services/token';
@@ -81,15 +85,15 @@ export const fetchNearbyPlacesAction = createAsyncThunk<void, Offer['id'], {
   },
 );
 
-export const fetchFavoritesAction = createAsyncThunk<Offers, undefined, {
+export const fetchFavoritesAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch;
   state: RootState;
   extra: AxiosInstance;
 }>(
   'data/fetchFavorites',
-  async (_arg, { extra: api }) => {
+  async (_arg, { dispatch, extra: api }) => {
     const { data } = await api.get<Offers>(APIRoute.Favorites);
-    return data;
+    dispatch(fetchFavorites(data));
   },
 );
 
@@ -135,3 +139,17 @@ export const logoutAction = createAsyncThunk<void, undefined, {
     dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
   },
 );
+
+export const postCommentAction = createAsyncThunk<Review, [string, CommentData], {
+  dispatch: AppDispatch;
+  state: RootState;
+  extra: AxiosInstance;
+}>(
+  'reviews/postComment',
+  async ([offerId, { comment, rating }], { dispatch, extra: api }) => {
+    dispatch(setDataPostingStatus(true));
+    const { data } = await api.post<Review>(`${APIRoute.Reviews}/${offerId}`, { comment, rating });
+    dispatch(postComment(data));
+    dispatch(setDataPostingStatus(false));
+    return data;
+  });

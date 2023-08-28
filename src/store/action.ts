@@ -1,7 +1,7 @@
 import { createAction } from '@reduxjs/toolkit';
 import { LocationItem, AuthorizationStatus } from '../constants';
 import type { Offers, ExtendedOffer } from '../types/offer';
-import { Reviews } from '../types/review';
+import { Reviews, Review } from '../types/review';
 
 export const changeLocationItem = createAction<LocationItem>('offers/changeLocationItem');
 
@@ -22,3 +22,7 @@ export const fetchNearbyPlaces = createAction<Offers>('data/fetchNearbyPlaces');
 export const fetchFavorites = createAction<Offers>('data/fetchFavorites');
 
 export const redirectToRoute = createAction<string>('user/redirectToRoute');
+
+export const setDataPostingStatus = createAction<boolean>('data/setDataPostingStatus');
+
+export const postComment = createAction<Review>('data/postComment');

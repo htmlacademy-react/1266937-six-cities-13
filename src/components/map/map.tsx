@@ -32,6 +32,8 @@ export default function Map({ city, offers, activeOffer, cardType }: MapProps): 
 
   useEffect(() => {
     if (map) {
+      map.setView([city.location.latitude, city.location.longitude], city.location.zoom);
+
       const markerLayer = layerGroup().addTo(map);
 
       offers.forEach((offer) => {
@@ -55,7 +57,7 @@ export default function Map({ city, offers, activeOffer, cardType }: MapProps): 
         map.removeLayer(markerLayer);
       };
     }
-  }, [map, activeOffer, offers]);
+  }, [map, activeOffer, offers, city]);
 
   return (
     <section

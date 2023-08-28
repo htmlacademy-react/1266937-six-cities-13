@@ -32,19 +32,32 @@ export enum LocationItem {
 
 export const DEFAULT_LOCATION_ITEM = LocationItem.Paris;
 
-// TODO
-export enum RatingTitle {
-  perfect = 5,
-  good = 4,
-  'not bad' = 3,
-  badly = 2,
-  terribly = 1
-}
+export const ratingTitle = [
+  {
+    value: 5,
+    title: 'perfect'
+  },
+  {
+    value: 4,
+    title: 'good'
+  },
+  {
+    value: 3,
+    title: 'not bad'
+  },
+  {
+    value: 2,
+    title: 'badly'
+  },
+  {
+    value: 1,
+    title: 'terribly'
+  },
+];
 
 export const URL_MARKER_DEFAULT = '../img/pin.svg';
 export const URL_MARKER_CURRENT = '../img/pin-active.svg';
 
-// TODO
 export const getPropertyByType = (type: string) => {
   switch (type) {
     case CardType.Cities:
@@ -101,3 +114,8 @@ export enum APIRoute {
 export const AUTH_TOKEN_KEY_NAME = 'six-cities-token';
 
 export const ERROR_TIMEOUT = 2000;
+
+export const commentLength = {
+  MIN: 50,
+  MAX: 300,
+};
