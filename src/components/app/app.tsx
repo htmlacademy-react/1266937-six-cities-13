@@ -12,11 +12,9 @@ import Layout from '../layout/layout';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
 import { getAuthorizationStatus, getAuthCheckedStatus } from '../../store/user-slice/user-selectors';
-import { getDataLoadingStatus } from '../../store/offers-slice/offers-selectors';
 
 export default function App(): JSX.Element {
   const isAuthChecked = useAppSelector(getAuthCheckedStatus);
-  const isDataLoading = useAppSelector(getDataLoadingStatus);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   // || isOffersDataLoading
