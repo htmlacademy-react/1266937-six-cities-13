@@ -2,7 +2,7 @@ import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError } f
 import { getToken } from './token';
 import { BACKEND_URL, REQUEST_TIMEOUT } from '../constants';
 import { StatusCodes } from 'http-status-codes';
-import { processErrorHandle } from './process-error-handle';
+import { toast } from 'react-toastify';
 
 const StatusCodeMapping: Record<number, boolean> = {
   [StatusCodes.BAD_REQUEST]: true,
@@ -41,7 +41,7 @@ export const createAPI = (): AxiosInstance => {
       if (error.response && shouldDisplayError(error.response)) {
         const detailMessage = (error.response.data);
 
-        processErrorHandle(detailMessage.message);
+        toast.warn(detailMessage.message);
       }
 
       throw error;

@@ -3,9 +3,10 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import PlaceCard from '../../components/place-card/place-card';
 import { CardType } from '../../constants';
 import { fetchFavoritesAction } from '../../store/api-actions';
+import { getFavorites } from '../../store/favorite-slice/favorite-selectors';
 
 export default function FavoritesPage(): JSX.Element {
-  const favorites = useAppSelector((state) => state.favorites);
+  const favorites = useAppSelector(getFavorites);
 
   const cities: string[] = [];
   favorites.forEach((item) => {

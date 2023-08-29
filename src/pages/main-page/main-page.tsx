@@ -8,13 +8,15 @@ import LocationList from '../../components/location-list/location-list';
 import SortOptions from '../../components/sort-options/sort-options';
 import { CardType, DEFAULT_SORT_OPTION } from '../../constants';
 import { sortMap } from '../../utils';
+import { getcurrentLocationItem } from '../../store/offers-slice/offers-selectors';
+import { getOffers } from '../../store/offers-slice/offers-selectors';
 
 export default function MainPage(): JSX.Element {
   const [activeOffer, setActiveOffer] = useState<Offer | undefined>(undefined);
   const [activeSort, setActiveSort] = useState<SortType>(DEFAULT_SORT_OPTION);
 
-  const currentLocationItem = useAppSelector((state) => state.currentLocationItem);
-  const offers = useAppSelector((state) => state.offers);
+  const currentLocationItem = useAppSelector(getcurrentLocationItem);
+  const offers = useAppSelector(getOffers);
 
   const offerListByLocation = offers.filter((offer) => offer.city.name === currentLocationItem);
 

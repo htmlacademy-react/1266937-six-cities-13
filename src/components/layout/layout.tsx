@@ -3,10 +3,11 @@ import { AppRoute, AuthorizationStatus } from '../../constants';
 import UserLoggedIn from '../user-logged-in/user-logged-in';
 import UserLoggedOut from '../user-logged-out/user-logged-out';
 import { useAppSelector } from '../../hooks';
+import { getAuthorizationStatus } from '../../store/user-slice/user-selectors';
 import clsx from 'clsx';
 
 function Layout(): JSX.Element {
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const { pathname } = useLocation();
 
   return (

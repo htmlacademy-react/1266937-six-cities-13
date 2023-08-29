@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks';
-import { changeLocationItem } from '../../store/action';
+import { changeLocationItem } from '../../store/offers-slice/offers-slice';
 import { LocationItem } from '../../constants';
 import clsx from 'clsx';
 import './location-list.css';

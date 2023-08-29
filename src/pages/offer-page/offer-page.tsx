@@ -10,17 +10,22 @@ import { AuthorizationStatus, CardType } from '../../constants';
 import { getRatingWidth, capitalizeFirstLetter } from '../../utils';
 import {
   fetchOfferAction,
-  fetchReviewsAction,
+  fetchCommentsAction,
   fetchNearbyPlacesAction
 } from '../../store/api-actions';
 import clsx from 'clsx';
 import LoadingScreen from '../../components/loading-screen/loading-screen';
+import { getOffer, getNearbyOffers, getDataLoadingStatus } from '../../store/offers-slice/offers-selectors';
+import { getComments } from '../../store/comments-slice/comments-selectors';
+import { getAuthorizationStatus } from '../../store/user-slice/user-selectors';
 
 export default function OfferPage(): JSX.Element {
-  const params = useParams();
-  const offerId = params.id;
+  type MyParams = { id: string };
 
-  const isDataLoading = useAppSelector((state) => state.isDataLoading);
+  const { id: offerId } = useParams<keyof MyParams>() as MyParams;
+
+  const isDataLoading = useAppSelector(getDataLoadingStatus);
+  const offer = useAppSelector(getOffer);
   const {
     id,
     title,
@@ -35,32 +40,43 @@ export default function OfferPage(): JSX.Element {
     host,
     description,
     isFavorite,
-    city } = useAppSelector((state) => state.offer);
+    city } = offer;
 
-  const reviews = useAppSelector((state) => state.reviews);
-  const nearbyPlaces = useAppSelector((state) => state.nearbyPlaces).slice(0, 3);
+  const reviews = useAppSelector(getComments);
+  const nearbyPlaces = useAppSelector(getNearbyOffers).slice(0, 3);
+
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (offerId) {
+    let isMounted = true;
+
+    if (isMounted) {
       dispatch(fetchOfferAction(offerId));
-      dispatch(fetchReviewsAction(offerId));
+      dispatch(fetchCommentsAction(offerId));
       dispatch(fetchNearbyPlacesAction(offerId));
     }
 
+    return () => {
+      isMounted = false;
+    };
+
   }, [offerId, dispatch]);
 
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  if (id === undefined || isDataLoading) {
+    return <LoadingScreen />;
+  }
 
-  return (
-    <div className="page">
-      <main className="page__main page__main--offer">
-        {(id === undefined && isDataLoading === false) ?? <NotFoundPage />}
-        {id === undefined || isDataLoading
-          ?
-          <LoadingScreen />
-          :
+  if (id && isDataLoading === false) {
+    return (
+      <div className="page">
+        <main className="page__main page__main--offer">
+          {/* {(id === undefined && isDataLoading === false) ?? <NotFoundPage />}
+          {id === undefined || isDataLoading
+            ?
+            <LoadingScreen />
+            : */}
           <section className="offer">
             <div className="offer__gallery-container container">
               <div className="offer__gallery">
@@ -168,17 +184,19 @@ export default function OfferPage(): JSX.Element {
               </div>
             </div>
             <Map offers={nearbyPlaces} city={city} cardType={CardType.Offer} />
-          </section>}
-
-        <div className="container">
-          <section className="near-places places">
-            <h2 className="near-places__title">
-              Other places in the neighbourhood
-            </h2>
-            <PlaceList offers={nearbyPlaces} cardType={CardType.Nearby} />
           </section>
-        </div>
-      </main>
-    </div >
-  );
+          <div className="container">
+            <section className="near-places places">
+              <h2 className="near-places__title">
+                Other places in the neighbourhood
+              </h2>
+              <PlaceList offers={nearbyPlaces} cardType={CardType.Nearby} />
+            </section>
+          </div>
+        </main>
+      </div >
+    );
+  } else {
+    return <NotFoundPage />;
+  }
 }
