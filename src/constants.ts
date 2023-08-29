@@ -113,9 +113,22 @@ export enum APIRoute {
 
 export const AUTH_TOKEN_KEY_NAME = 'six-cities-token';
 
-export const ERROR_TIMEOUT = 2000;
-
 export const commentLength = {
   MIN: 50,
   MAX: 300,
 };
+
+export enum NameSpace {
+  Data = 'DATA',
+  User = 'USER',
+  Offers = 'OFFERS',
+  Comments = 'COMMENTS',
+  Favorite = 'FAVORITE',
+}
+
+export enum LoadingStatus {
+  Idle = 'IDLE',
+  Loading = 'LOADING',
+  Complete = 'COMPLETE',
+  Failed = 'FAILED',
+}

@@ -3,6 +3,7 @@ import { useAppSelector, useAppDispatch } from '../../hooks';
 import { MAX_RATING, DEFAULT_RATING, ratingTitle, commentLength } from '../../constants';
 import { postCommentAction } from '../../store/api-actions';
 import type { Offer } from '../../types/offer';
+import { getDataPostingStatus } from '../../store/comments-slice/comments-selectors';
 
 type ReviewFormProps = {
   id: Offer['id'];
@@ -33,7 +34,7 @@ function ReviewForm({ id }: ReviewFormProps): JSX.Element {
 
   const isFormValid = rating && comment.length >= commentLength.MIN && comment.length <= commentLength.MAX;
 
-  const isDataPosting = useAppSelector((state) => state.isDataPosting);
+  const isDataPosting = useAppSelector(getDataPostingStatus);
 
   return (
     <form
