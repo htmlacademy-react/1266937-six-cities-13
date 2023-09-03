@@ -1,14 +1,18 @@
 import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { AppRoute, AuthorizationStatus } from '../../constants';
+import { getAuthorizationStatus } from '../../store/user-slice/user-selectors';
 import { logoutAction } from '../../store/api-actions';
-import { AppRoute } from '../../constants';
+import { getFavorites } from '../../store/favorite-slice/favorite-selectors';
 
 function UserLoggedIn(): JSX.Element {
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const favorites = useAppSelector(getFavorites);
+
   const dispatch = useAppDispatch();
 
   return (
-
     <Fragment>
       <li className="header__nav-item user">
         <Link
@@ -20,7 +24,9 @@ function UserLoggedIn(): JSX.Element {
           <span className="header__user-name user__name">
             Oliver.conner@gmail.com
           </span>
-          <span className="header__favorite-count">3</span>
+          <span className="header__favorite-count">
+            {authorizationStatus === AuthorizationStatus.Auth ? favorites.length : 0}
+          </span>
         </Link>
       </li >
       <li className="header__nav-item">

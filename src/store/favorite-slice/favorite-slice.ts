@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace } from '../../constants';
 import { FavoriteSlice } from '../../types/state';
-import { fetchFavoritesAction } from '../api-actions';
+import { fetchFavoritesAction, changeFavoriteStatusAction } from '../api-actions';
 
 const initialState: FavoriteSlice = {
   favorites: [],
@@ -18,8 +18,11 @@ export const favoriteSlice = createSlice({
         state.isDataLoading = true;
       })
       .addCase(fetchFavoritesAction.fulfilled, (state, action) => {
-        state.favorites = action.payload;
         state.isDataLoading = false;
+        state.favorites = action.payload;
+      })
+      .addCase(changeFavoriteStatusAction.fulfilled, (state, action) => {
+        state.favorites = action.payload;
       });
   }
 });
