@@ -1,6 +1,8 @@
+import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { useAppSelector } from '../../hooks';
-import { AppRoute } from '../../constants';
+import { useAppSelector, useAppDispatch } from '../../hooks';
+import { HelmetProvider } from 'react-helmet-async';
+import { AppRoute, AuthorizationStatus } from '../../constants';
 import PrivateRoute from '../private-route/private-route';
 import MainPage from '../../pages/main-page/main-page';
 import LoginPage from '../../pages/login-page/login-page';
@@ -12,12 +14,19 @@ import Layout from '../layout/layout';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
 import { getAuthorizationStatus, getAuthCheckedStatus } from '../../store/user-slice/user-selectors';
-import { getDataLoadingStatus } from '../../store/offers-slice/offers-selectors';
+import { fetchFavoritesAction } from '../../store/api-actions';
 
 export default function App(): JSX.Element {
   const isAuthChecked = useAppSelector(getAuthCheckedStatus);
-  const isDataLoading = useAppSelector(getDataLoadingStatus);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      dispatch(fetchFavoritesAction());
+    }
+  }, [dispatch, authorizationStatus]);
 
   // || isOffersDataLoading
   if (!isAuthChecked) {
@@ -27,37 +36,39 @@ export default function App(): JSX.Element {
   }
 
   return (
-    <HistoryRouter history={browserHistory}>
-      <Routes>
-        <Route path={AppRoute.Main} element={<Layout />}>
+    <HelmetProvider>
+      <HistoryRouter history={browserHistory}>
+        <Routes>
+          <Route path={AppRoute.Main} element={<Layout />}>
+            <Route
+              index
+              element={<MainPage />}
+            />
+            <Route
+              path={AppRoute.Login}
+              element={<LoginPage />}
+            />
+            <Route
+              path={AppRoute.Favorites}
+              element={
+                <PrivateRoute
+                  authorizationStatus={authorizationStatus}
+                >
+                  <FavoritesPage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path={AppRoute.Offer}
+              element={<OfferPage />}
+            />
+          </Route>
           <Route
-            index
-            element={<MainPage />}
+            path='*'
+            element={<NotFoundPage />}
           />
-          <Route
-            path={AppRoute.Login}
-            element={<LoginPage />}
-          />
-          <Route
-            path={AppRoute.Favorites}
-            element={
-              <PrivateRoute
-                authorizationStatus={authorizationStatus}
-              >
-                <FavoritesPage />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path={AppRoute.Offer}
-            element={<OfferPage />}
-          />
-        </Route>
-        <Route
-          path='*'
-          element={<NotFoundPage />}
-        />
-      </Routes>
-    </HistoryRouter>
+        </Routes>
+      </HistoryRouter>
+    </HelmetProvider>
   );
 }

@@ -10,10 +10,17 @@ function Layout(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const { pathname } = useLocation();
 
+  // const offers = useAppSelector(getOffers);
+
+  const isLoginPage = pathname === AppRoute.Login;
+  const isMainPage = pathname === AppRoute.Main;
+  const isFavoritesPage = pathname === AppRoute.Favorites;
+  // const isMainEmpty = isFavoritesPage && offerListByLocation.length === 0;
+
   return (
     <div className={clsx('page', {
-      'page--gray page--login': pathname === AppRoute.Login,
-      'page--gray page--main': pathname === AppRoute.Main,
+      'page--gray page--login': isLoginPage,
+      'page--gray page--main': isMainPage,
     })}
     >
       <header>
@@ -22,7 +29,7 @@ function Layout(): JSX.Element {
             <div className="header__left">
               <Link
                 className={clsx('header__logo-link', {
-                  'header__logo-link--active': pathname === AppRoute.Main
+                  'header__logo-link--active': isMainPage
                 })}
                 to={AppRoute.Main}
               >
@@ -35,7 +42,7 @@ function Layout(): JSX.Element {
                 />
               </Link>
             </div>
-            {pathname !== AppRoute.Login &&
+            {!isLoginPage &&
               <nav className="header__nav">
                 <ul className="header__nav-list">
                   {authorizationStatus === AuthorizationStatus.Auth
@@ -51,7 +58,8 @@ function Layout(): JSX.Element {
 
       <Outlet />
 
-      {pathname === AppRoute.Favorites &&
+      {
+        isFavoritesPage &&
         <footer className="footer container">
           <Link className="footer__logo-link" to={AppRoute.Main}>
             <img
@@ -62,7 +70,8 @@ function Layout(): JSX.Element {
               height={33}
             />
           </Link>
-        </footer>}
+        </footer>
+      }
     </div>
   );
 }

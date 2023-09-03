@@ -1,6 +1,7 @@
-import { useEffect } from 'react';
+import { useEffect, Fragment } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
+import { Helmet } from 'react-helmet-async';
 import ReviewForm from '../../components/review-form/review-form';
 import ReviewList from '../../components/review-list/review-list';
 import PlaceList from '../../components/place-list/place-list';
@@ -68,15 +69,17 @@ export default function OfferPage(): JSX.Element {
     return <LoadingScreen />;
   }
 
-  if (id && isDataLoading === false) {
-    return (
-      <div className="page">
-        <main className="page__main page__main--offer">
-          {/* {(id === undefined && isDataLoading === false) ?? <NotFoundPage />}
-          {id === undefined || isDataLoading
-            ?
-            <LoadingScreen />
-            : */}
+  return (
+    <Fragment>
+      <Helmet>
+        <title>6 sities. Offer</title>
+      </Helmet>
+      <main className="page__main page__main--offer">
+        {(id === undefined && isDataLoading === false) ?? <NotFoundPage />}
+        {id === undefined || isDataLoading
+          ?
+          <LoadingScreen />
+          :
           <section className="offer">
             <div className="offer__gallery-container container">
               <div className="offer__gallery">
@@ -184,19 +187,16 @@ export default function OfferPage(): JSX.Element {
               </div>
             </div>
             <Map offers={nearbyPlaces} city={city} cardType={CardType.Offer} />
+          </section>}
+        <div className="container">
+          <section className="near-places places">
+            <h2 className="near-places__title">
+              Other places in the neighbourhood
+            </h2>
+            <PlaceList offers={nearbyPlaces} cardType={CardType.Nearby} />
           </section>
-          <div className="container">
-            <section className="near-places places">
-              <h2 className="near-places__title">
-                Other places in the neighbourhood
-              </h2>
-              <PlaceList offers={nearbyPlaces} cardType={CardType.Nearby} />
-            </section>
-          </div>
-        </main>
-      </div >
-    );
-  } else {
-    return <NotFoundPage />;
-  }
+        </div>
+      </main>
+    </Fragment>
+  );
 }
